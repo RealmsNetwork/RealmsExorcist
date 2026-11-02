@@ -326,6 +326,11 @@ public final class RealmsExorcist extends JavaPlugin {
         int lineLimit = Math.max(100, getConfig().getInt("settings.scan-log-lines", 2500));
         int maxFindings = Math.max(1, getConfig().getInt("settings.max-log-findings", 30));
         try {
+            long logSize = Files.size(log);
+            if (logSize > 32L * 1024L * 1024L) {
+                sender.sendMessage(ChatColor.YELLOW + "latest.log exceeds the 32 MiB safety limit; rotate the log before scanning.");
+                return 1;
+            }
             List<String> lines = Files.readAllLines(log, StandardCharsets.UTF_8);
             int start = Math.max(0, lines.size() - lineLimit);
             Map<String, Integer> grouped = new LinkedHashMap<>();
