@@ -5,7 +5,11 @@ settings:
   show-clean-checks: false
 checks:
   dependencies: true
-  server-runtime: true
+  compatibility: true
+  configuration-files: true
+  proxy: true
   recent-logs: true
   memory: true
-  configuration-files: true
+limits:
+  max-config-files: 500
+  max-config-size-mib: 2
