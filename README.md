@@ -35,7 +35,7 @@ RealmsExorcist is a diagnostics and controlled-maintenance plugin for Paper and 
 | `/exorcist repair own-config confirm` | Back up and restore this plugin's default config |
 | `/exorcist reload` | Reload this plugin's config |
 
-Aliases: `/rex`, `/exorcism`.
+Alias: `/rex`.
 
 ## Permissions
 
