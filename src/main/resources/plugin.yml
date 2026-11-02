@@ -8,7 +8,7 @@ commands:
   exorcist:
     description: Run server diagnostics and safe maintenance tasks.
     usage: /exorcist <scan|logs|doctor|repair|reload>
-    aliases: [rex, exorcism]
+    aliases: [rex]
     permission: realmsexorcist.use
 permissions:
   realmsexorcist.use:
