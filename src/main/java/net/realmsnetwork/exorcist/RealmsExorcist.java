@@ -401,7 +401,7 @@ public final class RealmsExorcist extends JavaPlugin {
         Path backup = getDataFolder().toPath().resolve("config.yml.backup-" + LocalDateTime.now().format(BACKUP_TIME));
         try {
             if (Files.exists(config)) Files.copy(config, backup);
-            try (var input = getResource("config.yml") == null ? null : getResource("config.yml")) {
+            try (var input = getResource("config.yml")) {
                 if (input == null) {
                     sender.sendMessage(ChatColor.RED + "Bundled default config.yml is missing. No changes were made.");
                     return;
