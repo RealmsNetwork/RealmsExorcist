@@ -206,7 +206,7 @@ public final class RealmsExorcist extends JavaPlugin {
                     String name = file.getFileName().toString().toLowerCase(Locale.ROOT);
                     if (attrs.isRegularFile() && !Files.isSymbolicLink(file)
                             && (name.endsWith(".yml") || name.endsWith(".yaml"))) yamlFiles.add(file);
-                    return yamlFiles.size() >= MAX_CONFIG_FILES ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
+                    return yamlFiles.size() >= maxConfigFiles ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
                 }
             });
         } catch (IOException ex) {
@@ -228,7 +228,7 @@ public final class RealmsExorcist extends JavaPlugin {
                 LoaderOptions options = new LoaderOptions();
                 options.setAllowDuplicateKeys(false);
                 options.setMaxAliasesForCollections(20);
-                options.setCodePointLimit((int) MAX_CONFIG_BYTES);
+                options.setCodePointLimit((int) maxConfigBytes);
                 Yaml yaml = new Yaml(new SafeConstructor(options));
                 try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
                     for (Object ignored : yaml.loadAll(reader)) {
