@@ -1,7 +1,7 @@
 name: RealmsExorcist
 version: 1.0.0
 main: net.realmsnetwork.exorcist.RealmsExorcist
-api-version: '1.20'
+api-version: '1.21'
 description: Diagnoses haunted Minecraft servers.
 author: RealmsNetwork
 commands:
