@@ -11,5 +11,6 @@ checks:
   recent-logs: true
   memory: true
 limits:
-  max-config-files: 500
-  max-config-size-mib: 2
+  max-config-files: 200
+  max-config-size-kib: 512
+  max-total-config-mib: 32
