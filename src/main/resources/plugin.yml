@@ -1,17 +1,19 @@
 name: RealmsExorcist
-version: 1.0.0
+version: 1.1.0
 main: net.realmsnetwork.exorcist.RealmsExorcist
 api-version: '1.21'
-description: Diagnoses haunted Minecraft servers.
+description: Server diagnostics and safe configuration recovery for Paper and compatible servers.
 author: RealmsNetwork
 commands:
   exorcist:
-    description: Diagnose your server's possessions.
-    usage: /exorcist <scan|logs|doctor|reload>
+    description: Run server diagnostics and safe maintenance tasks.
+    usage: /exorcist <scan|logs|doctor|repair|reload>
     aliases: [rex, exorcism]
     permission: realmsexorcist.use
 permissions:
   realmsexorcist.use:
+    description: Allows running RealmsExorcist diagnostics.
     default: op
   realmsexorcist.admin:
+    description: Allows configuration reload and confirmed recovery actions.
     default: op
