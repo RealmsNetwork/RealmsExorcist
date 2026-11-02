@@ -42,8 +42,8 @@ public final class RealmsExorcist extends JavaPlugin {
     );
     private static final Pattern EXCEPTION_NAME = Pattern.compile("([\\w.$]+(?:Exception|Error))(?::\\s*(.*))?");
     private static final DateTimeFormatter BACKUP_TIME = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-    private static final int MAX_CONFIG_FILES = 500;
-    private static final long MAX_CONFIG_BYTES = 2L * 1024L * 1024L;
+    private static final int MAX_CONFIG_FILES = 200;
+    private static final long MAX_CONFIG_BYTES = 512L * 1024L;
 
     @Override
     public void onEnable() {
