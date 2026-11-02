@@ -192,9 +192,10 @@ public final class RealmsExorcist extends JavaPlugin {
         }
         int maxConfigFiles = Math.max(1, Math.min(1000, getConfig().getInt("limits.max-config-files", 200)));
         long maxConfigBytes = Math.max(64L, Math.min(4096L, getConfig().getLong("limits.max-config-size-kib", 512))) * 1024L;
+        long maxTotalConfigBytes = Math.max(1L, Math.min(128L, getConfig().getLong("limits.max-total-config-mib", 32))) * 1024L * 1024L;
         List<Path> yamlFiles = new ArrayList<>();
         try {
-            Files.walkFileTree(pluginsFolder, new SimpleFileVisitor<>() {
+            Files.walkFileTree(pluginsFolder, Set.of(), 8, new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
                     if (Files.isSymbolicLink(dir)) return FileVisitResult.SKIP_SUBTREE;
@@ -216,15 +217,17 @@ public final class RealmsExorcist extends JavaPlugin {
 
         int invalid = 0;
         int skipped = 0;
+        long scannedBytes = 0;
         for (Path file : yamlFiles) {
             try {
                 long size = Files.size(file);
-                if (size > maxConfigBytes) {
+                if (size > maxConfigBytes || scannedBytes + size > maxTotalConfigBytes) {
                     skipped++;
                     sender.sendMessage(ChatColor.YELLOW + "[SKIP] " + relative(pluginsFolder, file) + " exceeds the "
                             + (maxConfigBytes / 1024 / 1024) + " MiB validation limit.");
                     continue;
                 }
+                scannedBytes += size;
                 LoaderOptions options = new LoaderOptions();
                 options.setAllowDuplicateKeys(false);
                 options.setMaxAliasesForCollections(20);
