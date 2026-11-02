@@ -24,7 +24,7 @@ A read-only Paper/Purpur diagnostic plugin. The branding is unserious; the diagn
 ## Requirements
 - Paper or compatible fork such as Purpur
 - Java 21+
-- Minecraft 1.20+ (compiled against Paper 1.21.4 API)
+- Minecraft 1.21.4+ (compiled against Paper 1.21.4 API)
 
 ## Build
 Run mvn clean package. The jar is written to target/RealmsExorcist-1.0.0.jar.
