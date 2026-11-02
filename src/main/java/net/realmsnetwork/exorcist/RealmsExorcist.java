@@ -42,8 +42,6 @@ public final class RealmsExorcist extends JavaPlugin {
     );
     private static final Pattern EXCEPTION_NAME = Pattern.compile("([\\w.$]+(?:Exception|Error))(?::\\s*(.*))?");
     private static final DateTimeFormatter BACKUP_TIME = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-    private static final int MAX_CONFIG_FILES = 200;
-    private static final long MAX_CONFIG_BYTES = 512L * 1024L;
 
     @Override
     public void onEnable() {
@@ -192,13 +190,15 @@ public final class RealmsExorcist extends JavaPlugin {
             sender.sendMessage(ChatColor.YELLOW + "[WARN] Plugins directory could not be located.");
             return 1;
         }
+        int maxConfigFiles = Math.max(1, Math.min(1000, getConfig().getInt("limits.max-config-files", 200)));
+        long maxConfigBytes = Math.max(64L, Math.min(4096L, getConfig().getLong("limits.max-config-size-kib", 512))) * 1024L;
         List<Path> yamlFiles = new ArrayList<>();
         try {
             Files.walkFileTree(pluginsFolder, new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
                     if (Files.isSymbolicLink(dir)) return FileVisitResult.SKIP_SUBTREE;
-                    return yamlFiles.size() >= MAX_CONFIG_FILES ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
+                    return yamlFiles.size() >= maxConfigFiles ? FileVisitResult.TERMINATE : FileVisitResult.CONTINUE;
                 }
 
                 @Override
@@ -219,10 +219,10 @@ public final class RealmsExorcist extends JavaPlugin {
         for (Path file : yamlFiles) {
             try {
                 long size = Files.size(file);
-                if (size > MAX_CONFIG_BYTES) {
+                if (size > maxConfigBytes) {
                     skipped++;
                     sender.sendMessage(ChatColor.YELLOW + "[SKIP] " + relative(pluginsFolder, file) + " exceeds the "
-                            + (MAX_CONFIG_BYTES / 1024 / 1024) + " MiB validation limit.");
+                            + (maxConfigBytes / 1024 / 1024) + " MiB validation limit.");
                     continue;
                 }
                 LoaderOptions options = new LoaderOptions();
