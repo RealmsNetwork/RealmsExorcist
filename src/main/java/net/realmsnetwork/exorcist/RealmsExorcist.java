@@ -53,7 +53,7 @@ public final class RealmsExorcist extends JavaPlugin {
         sender.sendMessage(ChatColor.GREEN + "[INFO] Runtime: " + Bukkit.getName() + " " + Bukkit.getBukkitVersion() + " | Java " + java);
         infos++;
         if (Runtime.version().feature() < 21) { sender.sendMessage(ChatColor.YELLOW + "[WARN] Java 21+ is recommended for modern 1.21 servers."); warnings++; }
-        for (Plugin p : Bukkit.getPluginManager().getPlugins()) {
+        if (getConfig().getBoolean("checks.dependencies", true)) for (Plugin p : Bukkit.getPluginManager().getPlugins()) {
             for (String dep : p.getDescription().getDepend()) if (Bukkit.getPluginManager().getPlugin(dep) == null) {
                 sender.sendMessage(ChatColor.RED + "[ERROR] " + p.getName() + " requires missing dependency " + dep); errors++;
             }
@@ -65,7 +65,7 @@ public final class RealmsExorcist extends JavaPlugin {
         Runtime r = Runtime.getRuntime();
         long used = (r.totalMemory()-r.freeMemory())/1048576, max = r.maxMemory()/1048576;
         sender.sendMessage(ChatColor.GREEN + "[INFO] JVM memory: " + used + " MiB / " + max + " MiB (JVM-wide, not per-plugin)."); infos++;
-        Path folder = Bukkit.getPluginsFolder().toPath();
+        Path folder = getDataFolder().toPath().getParent();
         try (Stream<Path> s = Files.list(folder)) {
             long configs = s.filter(Files::isRegularFile).filter(p -> p.toString().toLowerCase(Locale.ROOT).matches(".*\\.ya?ml$")).count();
             sender.sendMessage(ChatColor.GREEN + "[INFO] Found " + configs + " top-level YAML configuration files."); infos++;
