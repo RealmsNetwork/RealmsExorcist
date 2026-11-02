@@ -11,7 +11,7 @@ import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.Mark;
-import org.yaml.snakeyaml.error.YamlException;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -235,7 +235,7 @@ public final class RealmsExorcist extends JavaPlugin {
                         // Parsing each document is intentional; SafeConstructor prevents arbitrary object construction.
                     }
                 }
-            } catch (YamlException ex) {
+            } catch (YAMLException ex) {
                 invalid++;
                 Mark mark = ex.getProblemMark();
                 String location = mark == null ? "" : " at line " + (mark.getLine() + 1) + ", column " + (mark.getColumn() + 1);
