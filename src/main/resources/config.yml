@@ -1,0 +1,11 @@
+settings:
+  scan-on-enable: true
+  scan-log-lines: 2500
+  max-log-findings: 30
+  show-clean-checks: false
+checks:
+  dependencies: true
+  server-runtime: true
+  recent-logs: true
+  memory: true
+  configuration-files: true
