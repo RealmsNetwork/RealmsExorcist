@@ -1,0 +1,17 @@
+name: RealmsExorcist
+version: 1.0.0
+main: net.realmsnetwork.exorcist.RealmsExorcist
+api-version: '1.20'
+description: Diagnoses haunted Minecraft servers.
+author: RealmsNetwork
+commands:
+  exorcist:
+    description: Diagnose your server's possessions.
+    usage: /exorcist <scan|logs|doctor|reload>
+    aliases: [rex, exorcism]
+    permission: realmsexorcist.use
+permissions:
+  realmsexorcist.use:
+    default: op
+  realmsexorcist.admin:
+    default: op
